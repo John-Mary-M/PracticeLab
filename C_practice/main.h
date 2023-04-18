@@ -22,5 +22,5 @@ struct student
 	char *nextOfKin;
 	int emergencyContact;
 };
-void init_dog(struct dog *d, char *name, float age, char *owner);
+void initializer(struct dog *d, char *name, float age, char *owner);
 #endif /* MAIN_H */
