@@ -25,7 +25,7 @@ int main(void)
 		}
 		i++;
 	 
-	
+	}
 
 	/* check what user would like to do*/
 	printf("Welcome!\nTo access student records enter 1.\nTo access teacher
