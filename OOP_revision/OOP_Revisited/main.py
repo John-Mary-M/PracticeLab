@@ -59,11 +59,34 @@ class Item:
                         )
                 #for item in items:      # print list of dictionaries
                         #print(item)
+        
+        @staticmethod
+        def is_integer(num):
+                """_summary_
+
+                Args:
+                    num (int/float): number to check
+
+                Returns:
+                   Bolean: _description_
+                """
+                # We ignore floats that are point zero
+                # For example 5.0, 4.0
+                if isinstance(num, float):
+                        # ignore point zero
+                        return num.is_integer
+                elif isinstance(num, int):
+                        return True
+                else:
+                        return False
+                
+                
         # another way to print a comprehesive list of all instances
         def __repr__(self):     # magice method similar to __str__
                 return f"Item('{self.name}', {self.price}, {self.quantity})"
         
-     
+ 
+    
 Item.instantiate_from_csv()
 
 # to use the method above to acces the list of items
