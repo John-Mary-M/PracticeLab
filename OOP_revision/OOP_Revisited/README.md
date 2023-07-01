@@ -1,0 +1,2 @@
+###### In this directory I practice OOP from the basics following a 2 hour crash course from FreeCode Camp. 
+Am using an example that assumes we are creating a program for a tech store that calculates discounts, and total prices of items bought.
