@@ -1,10 +1,11 @@
-#!/usr/bin/python3
+
 # 1st July 2023         Mastering OOP
 """This module defines objects used to keep track of inventory in a tech store"""
 class Item:
         """Items, Their prices & quantities
         """
         pay_rate =0.8   # The pay rate after 20% discount
+        all = []        # Class attribute to access all instance attributes
         def __init__(self, name: str, price: float, quantity=0):        # instace attributes
                 """Constructor
 
@@ -21,6 +22,9 @@ class Item:
                 self.name = name
                 self.price = price
                 self.quantity = quantity
+                
+                # actions to execute
+                Item.all.append(self)   # add all objects to list as they are created
         
         def calculate_total_price(self):
                 """Calculates total prices for the items bought
@@ -33,12 +37,25 @@ class Item:
         def apply_discount(self):
                 self.price = self.price * self.pay_rate
                 
-                
+        # another way to print a comprehesive list of all instances
+        def __repr__(self):     # magice method similar to __str__
+                return f"Item('{self.name}', {self.price}, {self.quantity})"
+        
+     
 item1 = Item("Phone", 100, 1)
 item2 = Item("Laptop", 1000, 3)
 item3 = Item("Cable", 10, 5)
 item4 = Item("Mouse", 50, 5)
 item5 = Item("Keyboard", 75, 5)
+
+# to use the method above to acces the list of items
+print(Item.all)
+
+for object in Item.all:         # printint the list of all instances/ objects
+        print(object.name)
+        
+
+
 #print(Item.__dict__)    # All attributes for class level
 
 #print(item1.__dict__)   # All attributes for instance level
