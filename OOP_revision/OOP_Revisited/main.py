@@ -1,6 +1,8 @@
 
 # 1st July 2023         Mastering OOP
 """This module defines objects used to keep track of inventory in a tech store"""
+import csv
+
 class Item:
         """Items, Their prices & quantities
         """
@@ -36,23 +38,39 @@ class Item:
         
         def apply_discount(self):
                 self.price = self.price * self.pay_rate
+         
+        @classmethod    # decorator that converts method to class method      
+        def instantiate_from_csv(cls):         # Class method: Can only be accessed from the class level only
+                """Reads CSV file with our data
+
+                Returns:
+                    list of dictionaries: List containing all items in the csv
+                """
+                with open('items.csv', 'r') as f:
+                       reader = csv.DictReader(f)
+                       items = list(reader)
                 
+                # instantiate instances
+                for item in items:
+                        Item(
+                                name=str(item.get('name')),
+                                price=float(item.get('price')),
+                                quantity=int(item.get('quantity')),
+                        )
+                #for item in items:      # print list of dictionaries
+                        #print(item)
         # another way to print a comprehesive list of all instances
         def __repr__(self):     # magice method similar to __str__
                 return f"Item('{self.name}', {self.price}, {self.quantity})"
         
      
-item1 = Item("Phone", 100, 1)
-item2 = Item("Laptop", 1000, 3)
-item3 = Item("Cable", 10, 5)
-item4 = Item("Mouse", 50, 5)
-item5 = Item("Keyboard", 75, 5)
+Item.instantiate_from_csv()
 
 # to use the method above to acces the list of items
 print(Item.all)
 
-for object in Item.all:         # printint the list of all instances/ objects
-        print(object.name)
+#for object in Item.all:         # printint the list of all instances/ objects
+        #print(object.name)
         
 
 
