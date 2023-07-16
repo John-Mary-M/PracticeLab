@@ -11,9 +11,9 @@ print("Datatype before deserialization : "
 # deserializing the data
 data = json.loads(data)
  
-#print out data
-for k, v in data:
-        print(k, v)
+#print out data in key: Value format
+for key, value in data.items():         # items() from the dictionary data type because data at this point is a dictionary
+        print(key + ": " + value)
 
 print("Datatype after deserialization : "
       + str(type(data)))
