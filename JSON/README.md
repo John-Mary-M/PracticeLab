@@ -20,6 +20,7 @@ After deserializing data into a py dict then u can use all dictionary methods av
 
 ### Serialization: converting python objects to json
 The  json  module in Python provides a  json.dumps()  function that allows you to serialize Python objects into JSON format. This can be achived by using the:
-        json.dumps(): This function is used to serialize a Python object into a JSON formatted string.
 
-        json.dump(): This function is used to serialize a Python object and write it directly to a file-like object. It writes the JSON representation of the object to the specified file or file-like object.
+json.dumps(): This function is used to serialize a Python object into a JSON formatted string.
+
+json.dump(): This function is used to serialize a Python object and write it directly to a file-like object. It writes the JSON representation of the object to the specified file or file-like object.
