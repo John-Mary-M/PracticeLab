@@ -1,0 +1,87 @@
+HTTP/1.1 200 OK
+Date: Sun, 16 Jul 2023 13:04:28 GMT
+Server: Apache/2.4.29 (Ubuntu)
+Vary: Accept-Encoding
+Content-Length: 2549
+Connection: close
+Content-Type: text/html; charset=UTF-8
+
+
+
+
+Outgoing Port Tester
+
+
+
+Outgoing port tester
+
+This server listens on all TCP ports, allowing you to test any outbound TCP port.
+
+
+You have reached this page on port 80 (from http host header).
+
+
+Your network allows you to use this port.
+(Assuming that your network is not doing advanced traffic filtering.)
+
+
+Network service: http
+Your outgoing IP: 196.190.62.150
+Test a port using a command
+
+$ telnet portquiz.net 80 
+Trying ...
+Connected to portquiz.net.
+Escape character is '^]'.
+
+
+$ nc -v portquiz.net 80 
+Connection to portquiz.net 80 port [tcp/daytime] succeeded!
+
+
+$ curl portquiz.net:80 
+Port test successful!
+Your IP: 196.190.62.150
+
+$ wget -qO- portquiz.net:80 
+Port test successful!
+Your IP: 196.190.62.150
+
+# For Windows PowerShell users
+PS C:\> Test-NetConnection -InformationLevel detailed -ComputerName portquiz.net -Port 80
+Test a port using your browser
+
+In your browser address bar: http://portquiz.net:XXXX
+
+
+Examples: 
+http://portquiz.net:8080 
+http://portquiz.net:8 
+http://portquiz.net:666 
+
+Your browser can block network ports normally used for purposes other than Web browsing. In this case you should use the telnet or netcat commands to test the port.
+
+
+Please also note that this server uses some port for real services (22, 25), so testing with your browser on those ports will not work.
+
+Rate limiting
+
+05/06/2020 : I had to set up Rate limiting on new connections by IP, otherwise the charge was too high for the small portquiz VM. Sorry for that.
+
+
+Contact/feedback:
+
+
+
+Marc MAURICE
+
+
+See also:
+
+ Blog post on this topic and How it works 
+ Firebind, a commercial tester. javascript test 
+ outPorts, a tiny program to test a range of ports using portquiz 
+
+
+
+
