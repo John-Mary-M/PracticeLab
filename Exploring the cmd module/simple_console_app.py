@@ -1,8 +1,10 @@
 import cmd
 
+
 class HelloWorld(cmd.Cmd):
     """Simple command processor"""
-    FRIENDS = ['Alice', 'Adam', 'Barbara', 'Bob']
+
+    FRIENDS = ["Alice", "Adam", "Barbara", "Bob"]
 
     # define the first command
     def do_greet(self, person):
@@ -20,10 +22,14 @@ class HelloWorld(cmd.Cmd):
 
     # format live help
     def help_greet(self):
-        print("\n".join([
-            'greet [person]',
-            'Greet the named person',
-        ]))
+        print(
+            "\n".join(
+                [
+                    "greet [person]",
+                    "Greet the named person",
+                ]
+            )
+        )
 
     # built-in auto completion
     def complete_greet(self, text, line, begidx, endidx):

@@ -12,3 +12,4 @@ The cmd module contains one public class, Cmd, designed to be used as a base cla
         Auto-completion
 2. Overrinding Base Class Methods
 3. Configuring Cmd through Attributes
+4. Subprocesses
