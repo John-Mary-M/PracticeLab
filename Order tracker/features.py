@@ -31,7 +31,6 @@ class Base(cmd.Cmd):
         time_created = time_created.strftime('%d-%m-%Y %H:%M:%S')
         estimated_cost = float(input('How much will this order cost to fullfil? '))
         
-        
         order = {
             'name': name,
             'time_created': time_created,
@@ -53,6 +52,8 @@ class Base(cmd.Cmd):
         for order in Base.orders:
             if 'estimated_cost' not in order:
                 order['estimated_cost'] = 'unknown'
+            if 'time_updated' not in order:
+                order['time_updated'] = 'Not yet'
             else:
                 print(f"Name: {order['name']} Time created: {order['time_created']}  Order Status: {order['status']} Order Cost: {order.get('estimated_cost', 'unknown')} Updated: {order['time_updated']}")
             print()
@@ -126,7 +127,6 @@ class Base(cmd.Cmd):
                 return
             
         order[feild] = new_value
-        time = datetime.datetime.now().strftime('%d-%m-%Y %H:%M:%S')
-        order[Base.updated_time]. append(time)
+        order['time_updated'] = datetime.datetime.now().strftime('%d-%m-%Y %H:%M:%S')
         self.do_save_data(None)
         print("Order updated successfully!")

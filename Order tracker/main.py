@@ -6,8 +6,9 @@ def main():
     pass
 
 if __name__:="__main__":
-    features.Base.do_load_data(main)
-    features.Base().cmdloop()
+    base_instance = features.Base()
+    base_instance.do_load_data()
+    base_instance.cmdloop()
     
     
     
