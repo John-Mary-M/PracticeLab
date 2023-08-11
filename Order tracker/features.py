@@ -75,6 +75,7 @@ class Base(cmd.Cmd):
             print("No match found.")
         
     def do_EOF(self, arg):
+        """Terminates program"""
         return True
         print()
     
