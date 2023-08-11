@@ -2,6 +2,7 @@
 import json
 import cmd
 import datetime
+import uuid
 
 class Base(cmd.Cmd):
     """the line oriented interpreter"""
@@ -30,13 +31,15 @@ class Base(cmd.Cmd):
         time_created = datetime.datetime.now()
         time_created = time_created.strftime('%d-%m-%Y %H:%M:%S')
         estimated_cost = float(input('How much will this order cost to fullfil? '))
+        order_id = str(uuid.uuid4())
         
         order = {
             'name': name,
             'time_created': time_created,
             'status': con,
             'estimated_cost': estimated_cost,
-            'time_updated': Base.updated_time
+            'time_updated': Base.updated_time,
+            'order_id': order_id
         }
         Base.orders.append(order)
         print("order created successfully\nDont forget to save the data")
@@ -54,8 +57,13 @@ class Base(cmd.Cmd):
                 order['estimated_cost'] = 'unknown'
             if 'time_updated' not in order:
                 order['time_updated'] = 'Not yet'
+            if 'order_id' not in order:
+                order['order_id'] = str(uuid.uuid4())
+                Base.do_save_data(self, arg)
             else:
-                print(f"Name: {order['name']} Time created: {order['time_created']}  Order Status: {order['status']} Order Cost: {order.get('estimated_cost', 'unknown')} Updated: {order['time_updated']}")
+                print(
+                    f"Name: {order['name']} \nTime created: {order['time_created']}  \nOrder Status: {order['status']} \nOrder Cost: {order.get('estimated_cost', 'unknown')} \nUpdated: {order['time_updated']} \nId: {order['order_id']}"
+                )
             print()
             
             
@@ -69,7 +77,7 @@ class Base(cmd.Cmd):
         if found_order:
             print("Found order:")
             for found in found_order:
-                print(f"Name: {found['name']} Time created: {found['time_created']} Order Status: {found['status']} Order Cost: {found.get('estimated_cost', 'unknown')} Updated: {found.get('time_updated', ' ')}")
+                print(f"Name: {found['name']} /nTime created: {found['time_created']} Order Status: {found['status']} Order Cost: {found.get('estimated_cost', 'unknown')} Updated: {found.get('time_updated', ' ')}")
                 print()
         else:
             print("No match found.")
@@ -84,8 +92,8 @@ class Base(cmd.Cmd):
         data = json.dumps(Base.orders)
         with open('data.json', 'w') as file:
             file.write(data)
-        print("Data saved successfully!")
-        print()
+        # print("Data saved successfully!")
+        # print()
         
     def do_load_data(self):
         """Loads data from a JSON string into the base class
