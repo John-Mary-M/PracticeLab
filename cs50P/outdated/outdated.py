@@ -22,25 +22,21 @@ while True:
             month = int(date_parts[0])
             day = int(date_parts[1])
             year = int(date_parts[2])
-        elif " " in user_input:
+        elif ", " in user_input:
             date_parts = user_input.split(" ")
-            if ',' not in date_parts:
-                break
-            else:
-                date_parts = date_parts.replace(',', '')
-            month, day, year = date_parts
-            day, year = int(day), int(year)
+            month, day, year = date_parts[0], date_parts[1].replace(',', ''), date_parts[2]
+            # day, year = day, year
             if month in months:
                 month = months.index(month) + 1
-        elif ',' not in user_input:
-            break
+        # elif ',' not in user_input:
+        #     break
         else:
             raise ValueError
 
         if month < 1 or month > 12 or int(day) < 1 or int(day) > 31 or int(year) < 1:
             raise ValueError
 
-        formatted_date = f"{year:04d}-{month:02d}-{day:02d}"
+        formatted_date = f"{int(year):04d}-{month:02d}-{int(day):02d}"
         print(formatted_date)
         break
     except ValueError:
