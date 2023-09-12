@@ -1,8 +1,8 @@
 """cs50p 9/9/2023 the requests thrid party package that
 allow us connect to API's"""
 import sys
-import json
-import requests
+# import json
+from requests import requests
 
 if len(sys.argv) != 2:
     sys.exit()
