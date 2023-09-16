@@ -7,16 +7,15 @@ while True:
             continue
         gen_num = random.randint(1, n)
         
-        for guess in range(gen_num):
+        while True:
+            # prompt for another guess each a wrong guess is entered
+            # until player finds the right number
             player_guess = int(input('Guess: '))
-
             if player_guess < gen_num:
                 print('Too small!')
-                guess =+ 1
                 continue
             elif player_guess > gen_num:
                 print('Too large!')
-                guess =+ 1
                 continue
             else:
                 print('Just right!')
