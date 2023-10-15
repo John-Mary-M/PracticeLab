@@ -34,25 +34,21 @@ def read_csv(file):
     with open(file, "r") as csv_file:
         csv_reader = csv.DictReader(csv_file)
         rows = list(csv_reader)  # read all rows into a list of dictionaries
-
         for row in rows:
-            # Access the value of the first column using its header name
+            # Access the value of the "name" column
             value = row.pop("name")
+            
+            # Split the name into first and last based on comma and space
+            first, last = value.split(' ', 1)
+            row['first'] = last
+            row['last'] = first
 
-            # Split the name into first name and last name
-            first_name, last_name = value.split(" ", 1)
-            row["first_name"] = first_name.replace(",", "")
-            row["last_name"] = last_name
-
-    # Write the modified rows back to the CSV file
-    fieldnames = ["first_name", "last_name", "house"]  # Updated fieldnames
+    # Write the modified rows to a new CSV file
+    fieldnames = ["first", "last", "house"]
     with open(sys.argv[2], "w", newline="") as file:
-        writer = csv.DictWriter(
-            file, fieldnames=fieldnames, quoting=csv.QUOTE_NONE, escapechar="\\"
-        )
+        writer = csv.DictWriter(file, fieldnames=fieldnames)
         writer.writeheader()
         writer.writerows(rows)
-
-
+        
 if __name__ == "__main__":
     main()
