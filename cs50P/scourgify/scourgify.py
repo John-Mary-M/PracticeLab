@@ -37,18 +37,20 @@ def read_csv(file):
         for row in rows:
             # Access the value of the "name" column
             value = row.pop("name")
-            
+
             # Split the name into first and last based on comma and space
-            first, last = value.split(' ', 1)
-            row['first'] = last
-            row['last'] = first
+            first, last = value.split(" ", 1)
+            row["first"] = last
+            row["last"] = first.replace(',', '')
+
 
     # Write the modified rows to a new CSV file
     fieldnames = ["first", "last", "house"]
     with open(sys.argv[2], "w", newline="") as file:
-        writer = csv.DictWriter(file, fieldnames=fieldnames)
+        writer = csv.DictWriter(file, fieldnames=fieldnames, quoting=csv.QUOTE_NONE, escapechar="\\")
         writer.writeheader()
         writer.writerows(rows)
-        
+
+
 if __name__ == "__main__":
     main()
