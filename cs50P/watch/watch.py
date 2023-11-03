@@ -1,7 +1,7 @@
 """cs50p Problemset 7 regex 2/11/2023 watch.py
-    A program that looks through embeded youtube videos,
-    extracts and returns the orignal URL and in a case where 
-    there is no youtube link it returns none"""
+    A program that searches through iframe elements for embeded 
+    youtube video links, extracts and returns the orignal URL and 
+    in a case where there is no youtube link it returns none"""
     
 import re
 
@@ -12,9 +12,11 @@ def main():
 
 def parse(s):
     """extracts youtube url from an iframe element"""
-    if match := re.search(r'(\w*:\/\/\w*\.\w*\.\w*)(\/\w*\/)(\w*)', s, re.MULTILINE):
-        link, a = match.group(1), match.group(3)
-        return f"{link + a}"
+    if match := re.search(r'(\w*:\/\/w?w?w?\.?)(youtube\.\w*\/)(\w*"?)(\/?\w*"?)', s, re.MULTILINE):
+        pre, e, f = match.group(1), match.group(2), match.group(4)
+        f = re.sub(r'/', '', f)
+        url = f"{pre}{e}{f}".replace('"', "")
+        return url
 
 if __name__ == "__main__":
     main()
