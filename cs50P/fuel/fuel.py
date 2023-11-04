@@ -2,7 +2,7 @@
 while True:
     # print(f'{type(numerator)}, {type(denominator)}')
     try:
-        numerator, denominator = input("Faction: ").split("/")
+        numerator, denominator = input("Fraction: ").split("/")
         numerator, denominator = int(numerator), int(denominator)
         if numerator > denominator or denominator == 0:
             continue
