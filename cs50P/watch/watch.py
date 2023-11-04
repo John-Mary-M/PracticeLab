@@ -13,13 +13,14 @@ def main():
 
 def parse(s):
     """extracts youtube url from an iframe element"""
-    if match := re.search(r'(https?://[www]?\.?)(youtube\.)(\w*?"?\/embed)(\/?\w*"?)', s, re.MULTILINE):
-        pre, e, f = match.group(1), match.group(2), match.group(4)
-        # f = re.sub(r'/', '', f)
-        url = f"{pre}{e}{f}".replace('"', "")
-        url = re.sub(r'youtube.', 'youtu.be', url)
-        return url
-
+    if re.search(r'^<iframe.*<\/iframe>$', s):
+        url_match = re.search(
+            r'(http)(s)*:\/\/(www\.)*(youtube\.com\/)embed\/(\w*)', s, re.MULTILINE
+                              )
+        if url_match:
+            url_prt = url_match.groups()
+            return "https://youtu.be/" + url_prt[4]
+        return None
 
 if __name__ == "__main__":
     main()
