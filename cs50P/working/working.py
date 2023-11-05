@@ -25,12 +25,17 @@ def convert(s):
     if min_2 >= 60:
         raise ValueError
     am_pm_2 = match.group(6)
-
+    # if hr_2 == 12 and "AM" in am_pm_2:
+    #     hr_2 =- 12
     # AM PM conversions
     if am_pm_1 == "PM" and hr_1 < 12:
         hr_1 += 12
+    elif am_pm_1 == "AM" and hr_1 == 12:
+        hr_1 = 0
     if am_pm_2 == "PM" and hr_2 < 12:
         hr_2 += 12
+    elif am_pm_2 == "AM" and hr_2 == 12:
+        hr_2 = 0
     converted_time = f"{hr_1:02}:{min_1:02} to {hr_2:02}:{min_2:02}"
     return converted_time
 
