@@ -10,7 +10,7 @@ def main():
 
 def test_uppercase_um():
     """checks if count ignore uppercase um"""
-    assert count("UM") == 0
+    assert count("UM") == 1
 
 
 def test_lowercase_um():

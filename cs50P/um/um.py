@@ -17,7 +17,7 @@ def count(s):
     For instance, given text like hello, um, world, the function should
     return 1. Given text like yummy, though, the function should return 0."""
 
-    match = re.findall(r"\bum\b", s)
+    match = re.findall(r"\bum\b", s, re.IGNORECASE)
     # print(len(match))
     # if match:
     #     occurence = 0
