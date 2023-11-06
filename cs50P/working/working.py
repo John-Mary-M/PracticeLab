@@ -25,9 +25,14 @@ def convert(s):
     if min_2 >= 60:
         raise ValueError
     am_pm_2 = match.group(6)
+<<<<<<< HEAD
     if am_pm_2 == "PM" and hr_2 == 12:
         hr_2 = 0
 
+=======
+    # if hr_2 == 12 and "AM" in am_pm_2:
+    #     hr_2 =- 12
+>>>>>>> 36e2b10cea18b31cb90c5eb43067f3bf32f30680
     # AM PM conversions
     if am_pm_1 == "PM" and hr_1 < 12:
         hr_1 += 12
