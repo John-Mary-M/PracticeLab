@@ -47,15 +47,3 @@ class Jar:
     @property
     def size(self):
         return self._size
-
-def main():
-    """Entry Point"""
-    jar = Jar()
-    jar.deposit(8)
-    jar.withdraw(4)
-    print(jar)
-
-
-
-if __name__ == "__main__":
-    main()
