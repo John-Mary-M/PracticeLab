@@ -1,6 +1,7 @@
 """Experimenting with argparse"""
 import argparse
 import csv
+from tabulate import tabulate
 
 
 def main():
@@ -40,18 +41,20 @@ def get_input():
 
     return shopping_list
 
+
 def print_output(shopping_list):
     """Prints the shopping list"""
     total = 0
-    # print('Item \t Qnty \t Price \t Subtotal')
+    headers = ["Item", "Quantity", "Price", "Subtotal"]
+    rows = [[item[0], item[1], item[2], item[3]] for item in shopping_list]
+
+    print(tabulate(rows, headers=headers, tablefmt="pretty"))
+
     for item in shopping_list:
-        print(f"{item[0]} \t {item[1]} \t {item[2]} \t {item[3]}")
-        # print(f"Quantity: {item[1]}")
-        # print(f"Price: {item[2]}")
-        # print(f"Subtotal: {item[3]}")
-        print("----------------------------------------------")
         total += item[3]
+
     return f"Total: {total}"
+
 
 def store_input(input_list):
     """Stores User Input in a csv file"""

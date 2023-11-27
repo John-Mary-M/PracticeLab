@@ -87,7 +87,8 @@ def store_input(items, quantities, prices, subtotals):
 def parse_shopping_list(shopping_list):
     """Parses the formatted shopping list string into items, quantities, and prices"""
     # Implement the parsing logic here based on the formatting of shopping_list
-    # For now, assuming shopping_list is formatted like 'Item: item1, Quantity: quantity1, Price: price1\nItem: item2, Quantity: quantity2, Price: price2'
+    # For now, assuming shopping_list is formatted like 'Item: item1, Quantity: quantity1,
+    # Price: price1\nItem: item2, Quantity: quantity2, Price: price2'
     items = []
     quantities = []
     prices = []
