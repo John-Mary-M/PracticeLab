@@ -1,46 +1,77 @@
-"""cs50p final project 13/11/2023
-    pos.py is a point of sale software that allows user to
-    input a list of items bought a long with their prices and
-    quantities. In return pos calculates a fixed VAT,
-    puts a time/ date stamp, keeps a copy of the record and
-    prints back a receipt to the user
-"""
+"""Experimenting with argparse"""
+import argparse
+import csv
 
 
-class Pos:
-    def __init__(self, items: list, prices: int, quantities: int):
-        self._items = items
-        self._prices = prices
-        self._quantities = quantities
+def main():
+    """Entry Point"""
+    shopping_list = get_input()
+    store_input(shopping_list)
+    display = print_output(shopping_list)
+    print(display)
 
-    @property
-    def get_items(self):
-        """
-        gets items
-        """
-        return self._items
 
-    @get_items.setter
-    def set_items(self, new_items: list):
-        """Sets items to a list"""
-        updated_item_list = self._items.append(new_items)
-        return updated_item_list
+def get_input():
+    """gets user shoping list"""
+    parser = argparse.ArgumentParser(
+        description="Multiple items and prices and quantities"
+    )
+    parser.add_argument(
+        "item",
+        nargs="+",
+        help="Items to buy, the quantity and price for each e.g banana 3 780",
+    )
+    # parser.add_argument('qnty', type=int, help='Qunatity of each item to buy')
+    # parser.add_argument('price', type=int, help='Cost per item to buy')
+    args = parser.parse_args()
 
-    @property
-    def get_prices(self):
-        """gets item's price"""
-        return self._prices
+    if not args:
+        return "Error No items provided"
 
-    @get_prices.setter
-    def set_price(self, amount):
-        """sets item's price"""
-        self._price = amount
-        return self._price
+    items = args.item
+    shopping_list = []
 
-    @property
-    def get_quantities(self):
-        """gets item qnty"""
-        return self._quantities
+    for i in range(0, len(items), 3):
+        item = items[i]
+        quantity = int(items[i + 1])
+        price = int(items[i + 2])
+        sub_total = quantity * price
+        shopping_list.append([item, quantity, price, sub_total])
 
-    # def __str__(self):
-    #     return
+    return shopping_list
+
+def print_output(shopping_list):
+    """Prints the shopping list"""
+    total = 0
+    # print('Item \t Qnty \t Price \t Subtotal')
+    for item in shopping_list:
+        print(f"{item[0]} \t {item[1]} \t {item[2]} \t {item[3]}")
+        # print(f"Quantity: {item[1]}")
+        # print(f"Price: {item[2]}")
+        # print(f"Subtotal: {item[3]}")
+        print("----------------------------------------------")
+        total += item[3]
+    return f"Total: {total}"
+
+def store_input(input_list):
+    """Stores User Input in a csv file"""
+    csv_file = "user_input.csv"
+
+    # Check if the file exists, if not, create it and write header
+    headers = ["Item", "Quantity", "Price", "Subtotal"]
+    try:
+        with open(csv_file, "x", newline="") as file:
+            writer = csv.writer(file, quoting=csv.QUOTE_MINIMAL)
+            writer.writerow(headers)
+    except FileExistsError:
+        pass  # File already exists, no need to write header
+
+    # Append user input to the CSV file
+    with open(csv_file, "a", newline="") as file:
+        writer = csv.writer(file, quoting=csv.QUOTE_MINIMAL)
+        for item in input_list:
+            writer.writerow(item)
+
+
+if __name__ == "__main__":
+    main()

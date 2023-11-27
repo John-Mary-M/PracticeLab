@@ -1,5 +1,1 @@
-banana,30,400
-apple,3,50
-butter,2,100
-bread,3,80
-milk,4,120
+Item,Quantity,Price,Subtotal
