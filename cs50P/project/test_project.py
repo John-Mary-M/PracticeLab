@@ -1,7 +1,7 @@
 """tests the functionality of the shoppers App"""
 
 import csv
-import subprocess
+import os
 import pytest
 from tabulate import tabulate
 from project import get_input, print_output, store_input
@@ -64,31 +64,48 @@ def test_print_output(capsys):
     assert captured_output.strip() == expected_output.strip()
 
 
-# def test_store_input(tmp_path):
-#     """
-#     Test store_input function.
+@pytest.fixture
+def cleanup_csv_file():
+    """Ensure the CSV file is deleted before each test"""
+    csv_file = "user_input.csv"
+    if os.path.exists(csv_file):
+        os.remove(csv_file)
 
-#     Ensure that the store_input function correctly writes the shopping list to a CSV file.
-#     """
-#     csv_file = tmp_path / "test_user_input.csv"
-#     shopping_list = [
-#         ["banana", 3, 780, 2340],
-#         ["apple", 2, 100, 200],
-#         ["korg", 1, 234, 234],
-#     ]
 
-#     store_input(shopping_list, csv_file)
+def test_store_input_existing_file(cleanup_csv_file):
+    """Test store_input function with an existing CSV file."""
+    # Create an existing CSV file with headers
+    csv_file = "user_input.csv"
+    headers = ["Item", "Quantity", "Price", "Subtotal"]
+    with open(csv_file, "w", newline="") as file:
+        writer = csv.writer(file, quoting=csv.QUOTE_MINIMAL)
+        writer.writerow(headers)
+    # Input list to be stored
+    input_list = [["banana", 3, 780, 2340], ["apple", 2, 100, 200]]
 
-#     with open(csv_file, "r") as file:
-#         reader = csv.reader(file)
-#         header = next(reader)
-#         assert header == ["Item", "Quantity", "Price", "Subtotal"]
+    # Call the store_input function
+    store_input(input_list)
 
-#         rows = [row for row in reader]
-#         assert len(rows) == 3
-#         assert rows[0] == ["banana", "3", "780", "2340"]
-#         assert rows[1] == ["apple", "2", "100", "200"]
-#         assert rows[2] == ["korg", "1", "234", "234"]
+    # Verify the content of the CSV file
+    with open(csv_file, "r") as file:
+        reader = csv.reader(file)
+        rows = list(reader)
+        assert rows == [headers, ["banana", "3", "780", "2340"], ["apple", "2", "100", "200"]]
+
+def test_store_input_new_file(cleanup_csv_file):
+    """Test store_input function with a new CSV file."""
+    # Input list to be stored
+    input_list = [["banana", 3, 780, 2340], ["apple", 2, 100, 200]]
+
+    # Call the store_input function
+    store_input(input_list)
+
+    # Verify the content of the CSV file
+    csv_file = "user_input.csv"
+    with open(csv_file, "r") as file:
+        reader = csv.reader(file)
+        rows = list(reader)
+        assert rows == [["Item", "Quantity", "Price", "Subtotal"], ["banana", "3", "780", "2340"], ["apple", "2", "100", "200"]]
 
 if __name__ == "__main__":
     pytest.main()
