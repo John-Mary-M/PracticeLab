@@ -1,70 +1,74 @@
-"""cs50 final project experiement"""
+"""cs50p Final project started on 18/11/2023
+    Project title: Shopper's App
+    Writen by: Mukisa John Mary
+    Language: English
+    Purpose of the App: To give the shopper a quick view of their costs
+    or estimates before they make them. Stores a csv record of these estimates
+    for later revision.
+"""
+import argparse
 import csv
-from argparse import ArgumentParser
+from tabulate import tabulate
 
 
 def main():
-    """Entry point"""
-    args = parse_arguments()
-
-    if args.file:
-        read_from_file(args.file)
-    else:
-        shopping_list, prices = get_input()
-        print(type(shopping_list))
-        print(shopping_list)
-
-        # Call store_input with the appropriate arguments
-        items, quantities, prices = parse_shopping_list(shopping_list)
-        subtotals = calculate_subtotals(quantities, prices)
-        store_input(items, quantities, prices, subtotals)
-
-        # Call calculate_total_cost and print the result
-        total_cost = calculate_total_cost(quantities, prices)
-        print(f"Total Cost: {total_cost}")
-
-
-def parse_arguments():
-    """Parse command-line arguments"""
-    parser = ArgumentParser(
-        description="Manage shopping lists and calculate total cost."
-    )
-    parser.add_argument("--file", "-f", help="Specify the CSV file to read")
-    args = parser.parse_args()
-    return args
+    """Entry Point"""
+    shopping_list = get_input()
+    store_input(shopping_list)
+    display = print_output(shopping_list)
+    print(display)
 
 
 def get_input():
-    """Gets items, quantities, and prices from user"""
-    parser = ArgumentParser(description="gets user items, quantities, and prices from")
-    parser.add_argument(
-        "pairs",
-        nargs="+",
-        help="Pairs of item, quantity, and price (e.g., 'banana 30 0.5')",
-    )
-    args = parser.parse_args()
+    """gets user shoping list"""
+    try:
+        parser = argparse.ArgumentParser(
+            description="Multiple items and prices and quantities"
+        )
+        parser.add_argument(
+            "item",
+            nargs="+",
+            help="Items to buy, the quantity and price for each e.g banana 3 780",
+        )
+        args = parser.parse_args()
 
-    if not args.pairs:
-        return "Error No items provided"
+        if not args.item:
+            raise argparse.ArgumentError(None, "Error: No items provided")
 
-    input_string = " ".join(args.pairs)
-    items = input_string.split(" ")
+        items = args.item
+        shopping_list = []
 
-    # Validate that the number of items is a multiple of 3
-    if len(items) % 3 != 0:
-        return "Error: Each item should have a corresponding quantity and price."
-    else:
-        quantities = items[1::3]
-        prices = items[2::3]
+        for i in range(0, len(items), 3):
+            item = items[i]
+            quantity = int(items[i + 1])
+            price = int(items[i + 2])
+            sub_total = quantity * price
+            shopping_list.append([item, quantity, price, sub_total])
 
-        input_strings = []
-        for item, quantity, price in zip(items[::3], quantities, prices):
-            input_strings.append(f"Item: {item}, Quantity: {quantity}, Price: {price}")
-
-        return "\n".join(input_strings), prices
+        return shopping_list
+    except SystemExit:
+        return "Invalid Input"
 
 
-def store_input(items, quantities, prices, subtotals):
+def print_output(shopping_list):
+    """Prints the shopping list"""
+
+    try:
+        total = 0
+        headers = ["Item", "Quantity", "Price", "Subtotal"]
+        rows = [[item[0], item[1], item[2], item[3]] for item in shopping_list]
+
+        print(tabulate(rows, headers=headers, tablefmt="pretty"))
+
+        for item in shopping_list:
+            total += item[3]
+
+        return f"Total: {total}"
+    except (SystemExit, IndexError):
+        return "Invalid input formart"
+
+
+def store_input(input_list):
     """Stores User Input in a csv file"""
     csv_file = "user_input.csv"
 
@@ -80,61 +84,8 @@ def store_input(items, quantities, prices, subtotals):
     # Append user input to the CSV file
     with open(csv_file, "a", newline="") as file:
         writer = csv.writer(file, quoting=csv.QUOTE_MINIMAL)
-        for item, quantity, price, subtotals in zip(items, quantities, prices):
-            writer.writerow([item, quantity, price, subtotals])
-
-
-def parse_shopping_list(shopping_list):
-    """Parses the formatted shopping list string into items, quantities, and prices"""
-    # Implement the parsing logic here based on the formatting of shopping_list
-    # For now, assuming shopping_list is formatted like 'Item: item1, Quantity: quantity1,
-    # Price: price1\nItem: item2, Quantity: quantity2, Price: price2'
-    items = []
-    quantities = []
-    prices = []
-    lines = shopping_list.split("\n")
-    for line in lines:
-        parts = line.split(", ")
-        item = parts[0].split(": ")[1]
-        quantity = parts[1].split(": ")[1]
-        price = parts[2].split(": ")[1]
-        items.append(item)
-        quantities.append(quantity)
-        prices.append(price)
-    return items, quantities, prices
-
-
-def calculate_total_cost(quantities, prices):
-    """Calculates the total cost based on quantities and prices"""
-    total_cost = sum(
-        float(quantity) * float(price) for quantity, price in zip(quantities, prices)
-    )
-    return total_cost
-
-
-def calculate_subtotals(quantities, prices):
-    """Calculates subtotals based on quantities and prices"""
-    subtotals = [
-        float(quantity) * float(price) for quantity, price in zip(quantities, prices)
-    ]
-    return subtotals
-
-
-def read_from_file(file_name):
-    """Reads data from a CSV file and prints it"""
-    try:
-        with open(file_name, "r") as file:
-            reader = csv.reader(file)
-
-            # Print the headers
-            headers = next(reader)
-            print(", ".join(headers))
-
-            # Print the remaining rows
-            for row in reader:
-                print(", ".join(row))
-    except FileNotFoundError:
-        print(f"Error: File '{file_name}' not found.")
+        for item in input_list:
+            writer.writerow(item)
 
 
 if __name__ == "__main__":
