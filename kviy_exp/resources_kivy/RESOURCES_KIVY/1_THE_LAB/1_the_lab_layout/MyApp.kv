@@ -1,0 +1,113 @@
+#: kivy 2.2.1
+
+WidgetEx:
+
+<WidgetEx>:
+	cols: 3
+	ToggleButton:
+		text: "toggle"
+		on_state: root.on_toggle_button_state(self)
+	Button:
+		text: "Count"
+		on_press: root.on_button_click()
+		
+	Label:
+		text: root.my_text
+		font_name: "Lcd.ttf"
+		font_size: "80dp"
+		color: 1, .5, 1, 1
+	
+<PageLayoutEx@PageLayout>:
+	MainWidget:
+	BoxLayoutExample:
+	AnchorLayoutEx:
+	GridLayoutEx:
+
+<ScrollViewEx@ScrollView>:
+	StackLayoutEx:
+		size_hint: 1, None
+		height: self.minimum_height
+
+<StackLayoutEx>:
+	# left-right, top-bottom
+	# orientation: "lr-tb"
+	padding: ("20dp", "20dp", "20dp", "20dp")
+	spacing: "20dp", "20dp"
+		
+	
+<GridLayoutEx@GridLayout>:
+	# for this layout to work we need to specify rows or columns
+	rows: 2
+	cols: 3
+	Button:
+		text: "A"
+		size_hint: .5, 1
+	BoxLayoutExample:
+	Button:
+		text: "C"
+	Button:
+		text: "D"
+		size_hint: .5, 1
+	Button:
+		text: "E"
+	Button:
+		text: "F"
+<AnchorLayoutEx>:
+	# right, left, center
+	anchor_x: "center"
+	# bottom, top, center
+	anchor_y: "top"
+	
+	BoxLayout:
+		size_hint: .2, .2
+	
+		Button:
+			text: "A"
+			
+		Button:
+			text: "B"
+			
+		
+
+<BoxLayoutExample>:
+	orientation: "horizontal"
+	Button:
+		text: "A"
+		size: "40dp", "40dp"
+		size_hint: None, None
+		# x, center_x, right
+		# y, center_y, top
+		# pos_hint: {"center_x": .5}
+		pos_hint: {"center_y": .5}
+	BoxLayout:
+		orientation: "vertical"
+		spacing: "10dp"
+		Button:
+			text: "B1"
+			size_hint: 1, 1
+		Button:
+			text: "B2"
+			size_hint: 1, 1
+		Button:
+			text: "B3"
+			size_hint: 1, 1
+		Button:
+			text: "B4"
+			size_hint: 1, 1	
+		
+	Label:
+		text: "C"
+		
+		
+<MainWidget>:
+	Label:
+		text: "Enter"
+		size: "40dp", "40dp"
+		pos: "100dp", "200dp"
+		color: 1, 0, 0, 1
+		
+	Button:
+		text: "Login"
+		size: "40dp", "40dp"
+		pos: "200dp", "300dp"
+		color: 0, 0, 1, 1
