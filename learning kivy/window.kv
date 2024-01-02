@@ -1,0 +1,20 @@
+#:kivy 2.2.1
+
+<My_widget>:
+    my_label: label
+    Button:
+        text: "Click Me"
+        pos: 100,100
+        size: 120,50
+        color: 0,1,0,1
+        font_size:20
+        # on_press:print("The BUtton is pressed")
+        # Instead of manual printing the the on_press message i can use a function
+        # in my main py file and access it in the kv file through the root.
+        on_press:root.click_me()
+
+    Label:
+        id: label
+        text: "I am a Label"
+        pos:100,150
+

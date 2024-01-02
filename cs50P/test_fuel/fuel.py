@@ -52,7 +52,8 @@ def gauge(percentage):
         case 0|1:
             return "E"
         case _:
-            return f"{percentage:.0f}%"
+            # return str(percentage) + '%'
+            return f'{percentage:.0f}%'
 
 if __name__ == "__main__":
     main()

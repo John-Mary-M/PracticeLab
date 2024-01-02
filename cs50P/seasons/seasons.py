@@ -9,8 +9,8 @@
      assume that it’s actually midnight, on the same date
 """
 import sys
-import re
 from datetime import date
+import re
 import inflect
 
 p = inflect.engine()
@@ -20,7 +20,7 @@ def main():
     """Entry Point"""
     birth_day = input("Date of Birth ")
     birth_day = get_date(birth_day)
-    year, month, day = birth_day.split('-')
+    year, month, day = birth_day.split("-")
     date_of_birth = date(int(year), int(month), int(day))
 
     current_date = date.today()
@@ -40,10 +40,11 @@ def main():
 
 def get_date(dob):
     """gets users date of birth"""
-    if re.search(r'^\d{4}-\d{2}-\d{2}$', dob):
+    if re.search(r"^\d{4}-\d{2}-\d{2}$", dob):
         return dob
     else:
-        sys.exit('Invalid date')
+        sys.exit("Invalid date")
+
 
 def tot_minutes(age):
     """converts days to minutes"""

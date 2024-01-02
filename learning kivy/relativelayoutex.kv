@@ -1,0 +1,31 @@
+#: kivy 2.2.1
+
+<Button>:
+    font_size: 25
+    size_hint: 0.3, 0.3
+
+<MyRelativeLayout>:
+    Button:
+        text: "Click One"
+        background_color: 0,1,1,1
+        pos_hint: {"x":0, "y":0}
+
+    Button:
+        text: "Click Two"
+        background_color: 1,0,1,1
+        pos_hint: {"right":1, "y":0}
+
+    Button:
+        text: "Click Three"
+        background_color: 1,1,0,1
+        pos_hint: {"center_x":.5, "center_y":.5}
+
+    Button:
+        text: "Click Four"
+        background_color: 1,1,1,1
+        pos_hint: {"x":0, "top":1}
+
+    Button:
+        text: "Click Five"
+        background_color: 1,1,1,1
+        pos_hint: {"right":1, "top":1}
