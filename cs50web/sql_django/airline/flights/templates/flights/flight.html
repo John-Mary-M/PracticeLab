@@ -1,0 +1,34 @@
+{% extends 'flights/layout.html' %}
+
+{% block body %}
+    <h1>Fligt {{ flight.id }}</h1>
+
+    <ul>
+        <li>Origin: {{ flight.origin }}</li>
+        <li>Destination: {{ flight.destination }}</li>
+        <li>Duration: {{ flight.duration }}</li>
+    </ul>
+
+    <h2>Passengers</h2>
+    <ul>
+        {% for passenger in passengers %}
+            <li>{{ passenger }}</li>
+        {% empty %}
+            <li>No passengers</li>
+        {% endfor %}
+    </ul>
+
+    <h2>Add passenger</h2>
+    <form action="{% url 'book' flight.id %}" method="POST">
+        {% csrf_token %} <!--For security-->
+        <!--name = passenger because in views.py when a passenger is got from the POST that has the name passenger-->
+        <select name="passenger">
+            {% for passenger in non_passengers %}
+                <option value="{{ passenger.id }}">{{ passenger }}</option>
+            {% endfor %}
+        </select>
+        <input type="submit">
+    </form>
+
+    <a href="{% url 'index' %}">Back to Flight List</a>
+{% endblock %}

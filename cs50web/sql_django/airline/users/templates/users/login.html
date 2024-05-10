@@ -1,0 +1,20 @@
+{% extends 'users/layout.html' %}
+
+{% block body %}
+
+    <!--Logic to display message if any eg the one for invalid credentials-->
+    {% if message %}
+        <div>
+            <h1>{{ message }}</h1>
+        </div>
+    {% endif %}
+
+    <!--Login Form-->
+    <form action="{% url 'login_view' %}" method="POST">
+        {% csrf_token %}
+        <input type="text" name="username" placeholder="Enter username">
+        <input type="password" name="password" placeholder="Password">
+        <input type="submit" value="Login">
+    </form>
+
+{% endblock %}
